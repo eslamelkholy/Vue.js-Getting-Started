@@ -8,7 +8,6 @@
 </template>
 
 <script>
-/* eslint-disable no-return-assign */
 export default {
   name: 'todo-check-all',
   computed: {
@@ -18,7 +17,7 @@ export default {
   },
   methods: {
     allChecked () {
-      this.$store.state.todos.forEach(todo => todo.completed = event.target.checked)
+      this.$store.commit('allChecked', event.target.checked)
     }
   }
 }

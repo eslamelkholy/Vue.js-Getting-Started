@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     clearCompleted () {
-      this.$store.state.todos = this.$store.state.todos.filter(ele => ele.completed === false)
+      this.$store.commit('clearCompleted')
     }
   }
 }

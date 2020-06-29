@@ -77,8 +77,7 @@ export default {
       this.$store.state.todos[index].completed = !this.completed
     },
     removeTodo (id) {
-      const index = this.$store.state.todos.findIndex(item => item.id === id)
-      this.$store.state.todos.splice(index, 1)
+      this.$store.commit('removeTodo', id)
     },
     editTodo () {
       this.beforeEditCache = this.title
@@ -87,8 +86,7 @@ export default {
     doneEdit () {
       if (this.title.trim() === '') return
       this.editing = false
-      const index = this.$store.state.todos.findIndex(item => item.id === this.id)
-      this.$store.state.todos.splice(index, 1, this.todo)
+      this.$store.commit('editTodo', {...this.todo})
     },
     cancelEdit () {
       this.title = this.beforeEditCache

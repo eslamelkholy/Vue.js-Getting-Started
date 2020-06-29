@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -35,6 +36,28 @@ export const store = new Vuex.Store({
     },
     showClearCompletedButton (state) {
       return state.todos.filter(todo => todo.completed).length > 0
+    }
+  },
+  mutations: {
+    addTodo (state, todo) {
+      state.todos.push(todo)
+    },
+    clearCompleted (state) {
+      state.todos = state.todos.filter(todo => !todo.completed)
+    },
+    updateFilter (state, filter) {
+      state.filter = filter
+    },
+    allChecked (state, checkedStatus) {
+      state.todos.forEach(todo => todo.completed = checkedStatus)
+    },
+    removeTodo (state, id) {
+      const index = state.todos.findIndex(item => item.id === id)
+      state.todos.splice(index, 1)
+    },
+    editTodo (state, todo) {
+      const index = state.todos.findIndex(item => item.id === todo.id)
+      state.todos.splice(index, 1, todo)
     }
   }
 })
