@@ -60,6 +60,9 @@ export default {
   created () {
     this.$eventBus.$on('pluralize', this.handlePluralize)
   },
+  beforeDestroy () {
+    this.$eventBus.$off('pluralize', this.handlePluralize)
+  },
   directives: {
     focus: {
       inserted: function (el) {
