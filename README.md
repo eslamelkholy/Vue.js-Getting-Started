@@ -7,9 +7,10 @@ Simple Application For Getting Started With Vue.js
 - Directives
 - Event Emits ( Pass State From Parent-Child )
 - Event Bus ( Dispatching Events And Listen For Them )
-- Vues ( High Level State Management ) Handle State Over Several Components
+- Vuex ( High Level State Management ) Handle State Over Several Components
 - Calling End Points Laravel Api
 - FireBase & FireStore Realtime Cases
 - Authentication Using Passport
 - Validations & Spinners
 - Testing
+- Docker
