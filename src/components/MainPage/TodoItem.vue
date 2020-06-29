@@ -20,8 +20,11 @@
         />
 
       </div>
-      <div @click="removeTodo(index)" class="remove-item">
-        &times;
+      <div>
+        <button @click="pluralize">Plural</button>
+        <span @click="removeTodo(index)" class="remove-item">
+          &times;
+        </span>
       </div>
     </div>
 </template>
@@ -54,6 +57,9 @@ export default {
       this.completed = this.todo.completed
     }
   },
+  created () {
+    this.$eventBus.$on('pluralize', this.handlePluralize)
+  },
   directives: {
     focus: {
       inserted: function (el) {
@@ -85,6 +91,21 @@ export default {
     cancelEdit () {
       this.title = this.beforeEditCache
       this.editing = false
+    },
+    pluralize () {
+      this.$eventBus.$emit('pluralize')
+    },
+    handlePluralize () {
+      this.title = this.title + 's'
+      this.$eventBus.$emit('finishedEdit', {
+        index: this.index,
+        'todo': {
+          id: this.id,
+          title: this.title,
+          completed: this.completed,
+          editing: this.editing
+        }
+      })
     }
   }
 }

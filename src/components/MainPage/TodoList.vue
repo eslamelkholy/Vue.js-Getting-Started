@@ -90,7 +90,6 @@ export default {
     }
   },
   created () {
-    /* eslint-disable */ 
     this.$eventBus.$on('removeTodo', (index) => this.removeTodo(index))
     this.$eventBus.$on('finishedEdit', (data) => this.finishedEdit(data))
   },
