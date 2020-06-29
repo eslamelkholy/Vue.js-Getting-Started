@@ -14,58 +14,37 @@
     :checkAll="!anyRemaining"
     >
     </todo-item>
+
     </transition-group>
 
     <div class="extra-container">
-      <div>
-        <label><input type="checkbox"
-        :checked = "!anyRemaining"
-        @change="checkAllTodos"
-        />Check All</label>
-      </div>
-      <div>{{ remaining }} items left</div>
+      <todo-check-all :anyRemaining="anyRemaining"></todo-check-all>
+      <todo-items-remaining :remaining="remaining"></todo-items-remaining>
     </div>
 
     <div class="extra-container">
-      <div>
-        <button
-        :class="{ active: filter == 'all'}"
-        @click="filter = 'all'"
-        >All</button>
-
-        <button
-        :class="{ active: filter =='active'}"
-        @click="filter = 'active'"
-        >active</button>
-
-        <button
-        :class="{ active: filter =='completed'}"
-        @click="filter = 'completed'"
-        >Completed</button>
-      </div>
-
-      <div>
-        <transition name="fade">
-          <button
-          v-if="showClearCompletedButton"
-          @click="clearCompleted"
-          >
-          Clear Completed
-          </button>
-          </transition>
-      </div>
-
+      <todo-filter></todo-filter>
+      <clear-completed-todo :showClearCompletedButton="showClearCompletedButton"></clear-completed-todo>
     </div>
   </div>
 </template>
 
 <script>
+/* eslint-disable no-return-assign */
 import TodoItem from './TodoItem.vue'
+import TodoItemsRemaining from './TodoItemsRemaining.vue'
+import TodoCheckAll from './TodoCheckAll.vue'
+import TodoFilter from './TodoFilter.vue'
+import ClearCompletedTodo from './ClearCompletedTodo.vue'
 
 export default {
   name: 'todo-list',
   components: {
-    TodoItem
+    TodoItem,
+    TodoItemsRemaining,
+    TodoCheckAll,
+    TodoFilter,
+    ClearCompletedTodo
   },
   data () {
     return {
@@ -92,6 +71,16 @@ export default {
   created () {
     this.$eventBus.$on('removeTodo', (index) => this.removeTodo(index))
     this.$eventBus.$on('finishedEdit', (data) => this.finishedEdit(data))
+    this.$eventBus.$on('allCheckedChanged', (checked) => this.checkAllTodos(checked))
+    this.$eventBus.$on('filterChanged', (filter) => this.filter = filter)
+    this.$eventBus.$on('clearCompleted', () => this.clearCompleted())
+  },
+  beforeDestroy () {
+    this.$eventBus.$off('removeTodo', (index) => this.removeTodo(index))
+    this.$eventBus.$off('finishedEdit', (data) => this.finishedEdit(data))
+    this.$eventBus.$off('allCheckedChanged', (checked) => this.checkAllTodos(checked))
+    this.$eventBus.$off('filterChanged', (filter) => this.filter = filter)
+    this.$eventBus.$off('clearCompleted', () => this.clearCompleted())
   },
   computed: {
     remaining () {
@@ -129,9 +118,9 @@ export default {
       if (!str) return false
       return true
     },
-    checkAllTodos () {
+    checkAllTodos (checked) {
       // eslint-disable-next-line no-return-assign
-      this.todos.forEach(todo => todo.completed = event.target.checked)
+      this.todos.forEach(todo => todo.completed = checked)
     },
     clearCompleted () {
       this.todos = this.todos.filter(ele => ele.completed === false)
