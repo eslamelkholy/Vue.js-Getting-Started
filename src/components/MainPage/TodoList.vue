@@ -54,23 +54,17 @@ export default {
     }
   },
   computed: {
-    remaining () {
-      return this.$store.getters.remaining
-    },
     anyRemaining () {
       return this.$store.getters.anyRemaining
     },
     todosFiltered () {
       return this.$store.getters.todosFiltered
-    },
-    showClearCompletedButton () {
-      return this.$store.getters.showClearCompletedButton
     }
   },
   methods: {
     addTodo () {
       if (!this.validateEmptyString(this.newTodo)) return
-      this.$store.commit('addTodo', {
+      this.$store.dispatch('addTodo', {
         id: this.idForTodo,
         title: this.newTodo,
         completed: false,

@@ -77,7 +77,7 @@ export default {
       this.$store.state.todos[index].completed = !this.completed
     },
     removeTodo (id) {
-      this.$store.commit('removeTodo', id)
+      this.$store.dispatch('removeTodo', id)
     },
     editTodo () {
       this.beforeEditCache = this.title
@@ -86,7 +86,7 @@ export default {
     doneEdit () {
       if (this.title.trim() === '') return
       this.editing = false
-      this.$store.commit('editTodo', {...this.todo})
+      this.$store.dispatch('editTodo', {...this.todo})
     },
     cancelEdit () {
       this.title = this.beforeEditCache
