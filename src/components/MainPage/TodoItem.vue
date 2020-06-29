@@ -63,7 +63,7 @@ export default {
   },
   methods: {
     removeTodo (index) {
-      this.$emit('removeTodo', index)
+      this.$eventBus.$emit('removeTodo', index)
     },
     editTodo () {
       this.beforeEditCache = this.title
@@ -72,7 +72,7 @@ export default {
     doneEdit () {
       if (this.title.trim() === '') return
       this.editing = false
-      this.$emit('finishedEdit', {
+      this.$eventBus.$emit('finishedEdit', {
         index: this.index,
         'todo': {
           id: this.id,
