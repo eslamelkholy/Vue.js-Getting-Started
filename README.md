@@ -1,30 +1,15 @@
 # studycase
 
-> A Vue.js project
+Simple Application For Getting Started With Vue.js 
 
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+# Topics
+- Working With ( Data, methods, Computes, Watch ,Components, Props)
+- Directives
+- Event Emits ( Pass State From Parent-Child )
+- Event Bus ( Dispatching Events And Listen For Them )
+- Vues ( High Level State Management ) Handle State Over Several Components
+- Calling End Points Laravel Api
+- FireBase & FireStore Realtime Cases
+- Authentication Using Passport
+- Validations & Spinners
+- Testing
