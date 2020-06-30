@@ -83,5 +83,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import url('./TodoStyle.scss');
+@import './TodoStyle.scss'
 </style>
