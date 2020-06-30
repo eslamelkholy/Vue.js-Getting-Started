@@ -24,7 +24,7 @@
                 <v-spacer></v-spacer>
               </v-toolbar>
               <v-card-text>
-                <v-form>
+                <v-form @submit.prevent="login" id="check-login-form">
                   <v-text-field
                     label="Email"
                     name="email"
@@ -45,7 +45,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary">Login</v-btn>
+                <v-btn type="submit" color="primary" form="check-login-form" @click="login">Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -62,6 +62,11 @@ export default {
     return {
       email: '',
       password: ''
+    }
+  },
+  methods: {
+    login () {
+      this.$store.dispatch('loginUser', { email: this.email, password: this.password })
     }
   }
 }

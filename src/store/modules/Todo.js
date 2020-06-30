@@ -1,7 +1,6 @@
 /* eslint-disable no-return-assign */
+import Axios from '../../service/axiosInstance'
 
-import Axios from 'axios'
-Axios.defaults.baseURL = 'http://127.0.0.1:8000'
 const state = () => ({
   todos: [],
   filter: 'all'

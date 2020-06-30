@@ -1,9 +1,10 @@
 <template>
   <div class="container">
-    <input v-model="newTodo" type="text" class="todo-input"
+    <v-text-field
+            v-model="newTodo" type="text" class="todo-input"
     placeholder="what wants to be done"
      @keyup.enter="addTodo"
-    />
+     ></v-text-field>
 
     <transition-group name="fade" enter-active-class="animated fadeInUp"
     leave-active-class="animated fadeOutDown">
