@@ -3,6 +3,7 @@ import Vue from 'vue'
 import Master from './components/layout/Master'
 import router from './router'
 import { store } from './store/index'
+import vuetify from './plugins/vuetify'
 
 Vue.prototype.$eventBus = new Vue()
 
@@ -14,5 +15,6 @@ new Vue({
   store,
   router,
   components: { Master },
+  vuetify,
   template: '<Master/>'
 })

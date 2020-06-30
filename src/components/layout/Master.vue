@@ -7,7 +7,6 @@
       <li><router-link :to="{ name: 'register' }">Register</router-link></li>
       <li><router-link :to="{ name: 'about' }">About</router-link> </li>
     </ul>
-    <img src="../../assets/logo.png" class="logo">
       <div class="flex-center">
         <router-view></router-view>
       </div>
