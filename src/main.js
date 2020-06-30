@@ -1,5 +1,6 @@
 import Vue from 'vue'
-import App from './App'
+// import App from './App'
+import Master from './components/layout/Master'
 import router from './router'
 import { store } from './store/index'
 
@@ -12,6 +13,6 @@ new Vue({
   el: '#app',
   store,
   router,
-  components: { App },
-  template: '<App/>'
+  components: { Master },
+  template: '<Master/>'
 })

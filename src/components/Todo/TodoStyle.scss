@@ -68,6 +68,7 @@ button {
   &:focus {
     outline: none;
   }
+  padding: 4px;
 }
 .active {
   background: lightgreen;
@@ -78,4 +79,7 @@ button {
 }
 .fade-enter, .fade-leave-to {
   opacity: 0;
+}
+.container{
+  width: 40%;
 }
