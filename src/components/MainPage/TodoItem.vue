@@ -50,7 +50,7 @@ export default {
   },
   data () {
     return {
-      ...this.todo
+      ...this.todo, editing: false
     }
   },
   watch: {
@@ -73,8 +73,7 @@ export default {
   },
   methods: {
     toggleChecked (id) {
-      const index = this.$store.state.todos.findIndex(item => item.id === id)
-      this.$store.state.todos[index].completed = !this.completed
+      this.$store.commit('toggleChecked', id)
     },
     removeTodo (id) {
       this.$store.dispatch('removeTodo', id)
@@ -86,7 +85,12 @@ export default {
     doneEdit () {
       if (this.title.trim() === '') return
       this.editing = false
-      this.$store.dispatch('editTodo', {...this.todo})
+      this.$store.dispatch('editTodo', {
+        id: this.id,
+        title: this.title,
+        completed: this.completed,
+        editing: this.editing
+      })
     },
     cancelEdit () {
       this.title = this.beforeEditCache

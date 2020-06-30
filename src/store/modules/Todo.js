@@ -1,20 +1,9 @@
 /* eslint-disable no-return-assign */
 
+import Axios from 'axios'
+Axios.defaults.baseURL = 'http://127.0.0.1:8000'
 const state = () => ({
-  todos: [
-    {
-      'id': 1,
-      'title': 'Finished Vue Screencase',
-      'completed': false,
-      'editing': false
-    },
-    {
-      'id': 2,
-      'title': 'Take Overworld',
-      'completed': false,
-      'editing': false
-    }
-  ],
+  todos: [],
   filter: 'all'
 })
 
@@ -55,32 +44,42 @@ const mutations = {
   editTodo: (state, todo) => {
     const index = state.todos.findIndex(item => item.id === todo.id)
     state.todos.splice(index, 1, todo)
+  },
+  toggleChecked: (state, id) => {
+    const index = state.todos.findIndex(item => item.id === id)
+    state.todos[index].completed = !state.todos[index].completed
+  },
+  getTodos: (state, todos) => {
+    state.todos = todos
   }
 }
 
 const actions = {
   addTodo: ({ commit }, todo) => {
-    commit('addTodo', todo)
+    Axios.post('/api/todos', todo).then(res => commit('addTodo', res.data))
   },
-  clearCompleted: ({commit}) => {
-    commit('clearCompleted')
+  clearCompleted: ({commit, state}) => {
+    const completed = state.todos.filter(todo => todo.completed).map(item => item.id)
+    Axios.delete('/api/todos/deleteCompleted', {data: {todos: completed}}).then(res => commit('clearCompleted'))
   },
   updateFilter: ({ commit }, filter) => {
     commit('updateFilter', filter)
   },
   allChecked: ({ commit }, checkedStatus) => {
-    commit('allChecked', checkedStatus)
+    Axios.put(`/api/todos/checkAll`, { completed: checkedStatus }).then(res => commit('allChecked', checkedStatus)).catch(err => console.log(err))
   },
   removeTodo: ({ commit }, id) => {
-    commit('removeTodo', id)
+    Axios.delete(`/api/todos/${id}`).then(res => commit('removeTodo', id))
   },
   editTodo: ({ commit }, todo) => {
-    commit('editTodo', todo)
+    Axios.put(`/api/todos/${todo.id}`, todo).then(res => commit('editTodo', res.data))
+  },
+  getTodos: ({ commit }) => {
+    Axios.get('/api/todos').then(res => commit('getTodos', res.data))
   }
 }
 
 export default {
-  namespaced: true,
   state,
   getters,
   actions,

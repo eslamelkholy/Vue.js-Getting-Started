@@ -49,9 +49,11 @@ export default {
   data () {
     return {
       beforeEditCache: '',
-      newTodo: '',
-      idForTodo: 3
+      newTodo: ''
     }
+  },
+  created () {
+    this.$store.dispatch('getTodos')
   },
   computed: {
     anyRemaining () {
