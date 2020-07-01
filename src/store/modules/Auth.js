@@ -1,6 +1,7 @@
 /* eslint-disable no-return-assign */
 import Axios from '../../service/axiosInstance'
 import router from '../../router'
+import AuthService from '../../service/Auth'
 
 const state = () => ({
   token: localStorage.getItem('token') || null,
@@ -15,43 +16,43 @@ const getters = {
 
 const mutations = {
   loginUser: (state, data) => {
-    state.token = data.access_token
-    state.user = data.user
+    AuthService.setState(state, data)
     router.push('/todo').catch(() => {})
   },
   logoutUser: (state) => {
     state.token = null
     state.user = {}
     router.push('/login').catch(() => {})
+  },
+  registerUser: (state, data) => {
+    AuthService.setState(state, data)
+    router.push('/todo').catch(() => {})
   }
 }
 
 const actions = {
   loginUser (context, credentials) {
     Axios.post('/api/user/login', credentials).then(res => {
-      setToken(context, res.data)
+      AuthService.setToken(res.data.access_token)
+      context.commit('loginUser', res.data)
     }).catch(err => console.log(err))
   },
   logoutUser: (context) => {
     if (context.getters.loggedIn) {
       Axios.post('/api/logout').then(res => {
-        removeToken(context)
+        AuthService.removeToken(context)
       }).catch(err => {
-        removeToken(context)
+        AuthService.removeToken(context)
         console.log(err)
       })
     }
+  },
+  registerUser: (context, data) => {
+    Axios.post('/api/user/register', data).then(res => {
+      AuthService.setToken(res.data.access_token)
+      context.commit('registerUser', res.data)
+    }).catch(err => console.log(err))
   }
-}
-
-const removeToken = (context) => {
-  localStorage.removeItem('token')
-  context.commit('logoutUser')
-}
-
-const setToken = (context, data) => {
-  localStorage.setItem('token', `Bearer ${data.access_token}`)
-  context.commit('loginUser', data)
 }
 
 export default {

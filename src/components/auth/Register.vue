@@ -24,7 +24,7 @@
                 <v-spacer></v-spacer>
               </v-toolbar>
               <v-card-text>
-                <v-form>
+                <v-form @submit.prevent="register" id="check-login-form">
                   <v-text-field
                     label="Name"
                     name="name"
@@ -61,7 +61,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary">Register</v-btn>
+                <v-btn type="submit" color="primary" form="check-login-form" @click="register">Register</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -80,6 +80,11 @@ export default {
       username: '',
       name: '',
       password: ''
+    }
+  },
+  methods: {
+    register () {
+      this.$store.dispatch('registerUser', { email: this.email, password: this.password, username: this.username, name: this.name })
     }
   }
 }
