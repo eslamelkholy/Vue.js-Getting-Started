@@ -61,7 +61,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn type="submit" color="primary" form="check-login-form" @click="register">Register</v-btn>
+                <v-btn type="submit" color="primary" form="check-login-form" @click.prevent="register">Register</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>

@@ -31,27 +31,21 @@ const mutations = {
 }
 
 const actions = {
-  loginUser (context, credentials) {
-    Axios.post('/api/user/login', credentials).then(res => {
-      AuthService.setToken(res.data.access_token)
-      context.commit('loginUser', res.data)
-    }).catch(err => console.log(err))
+  loginUser: async (context, credentials) => {
+    const res = await Axios.post('/api/user/login', credentials)
+    AuthService.setToken(res.data.access_token)
+    context.commit('loginUser', res.data)
   },
-  logoutUser: (context) => {
+  logoutUser: async (context) => {
     if (context.getters.loggedIn) {
-      Axios.post('/api/logout').then(res => {
-        AuthService.removeToken(context)
-      }).catch(err => {
-        AuthService.removeToken(context)
-        console.log(err)
-      })
+      await Axios.post('/api/logout')
+      AuthService.removeToken(context)
     }
   },
-  registerUser: (context, data) => {
-    Axios.post('/api/user/register', data).then(res => {
-      AuthService.setToken(res.data.access_token)
-      context.commit('registerUser', res.data)
-    }).catch(err => console.log(err))
+  registerUser: async (context, data) => {
+    const res = await Axios.post('/api/user/register', data)
+    AuthService.setToken(res.data.access_token)
+    context.commit('registerUser', res.data)
   }
 }
 

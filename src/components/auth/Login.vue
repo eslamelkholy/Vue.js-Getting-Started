@@ -48,6 +48,11 @@
                 <v-btn type="submit" color="primary" form="check-login-form" @click="login">Login</v-btn>
               </v-card-actions>
             </v-card>
+            <v-alert close-icon='$cancel' v-if="serverError" dense type="error">
+      <ul>
+        <li>{{ serverError }}</li>
+      </ul>
+    </v-alert>
           </v-col>
         </v-row>
       </v-container>
@@ -61,12 +66,18 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      serverError: ''
     }
   },
   methods: {
-    login () {
-      this.$store.dispatch('loginUser', { email: this.email, password: this.password })
+    async login () {
+      try {
+        await this.$store.dispatch('loginUser', { email: this.email, password: this.password })
+      } catch (err) {
+        this.serverError = err.response.data
+        this.password = ''
+      }
     }
   }
 }
