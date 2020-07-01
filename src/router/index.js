@@ -2,10 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import TodoList from '@/components/Todo/TodoList'
 import Home from '@/components/HomePage/Home'
-import About from '@/components/HomePage/About'
 import Login from '@/components/auth/Login'
 import Register from '@/components/auth/Register'
 import Logout from '@/components/auth/Logout'
+// import About from '@/components/HomePage/About'
 
 Vue.use(Router)
 
@@ -20,27 +20,31 @@ export default new Router({
     {
       path: '/todo',
       component: TodoList,
-      name: 'todo'
+      name: 'todo',
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/login',
       component: Login,
-      name: 'login'
+      name: 'login',
+      meta: {
+        requiresVisitor: true
+      }
     },
     {
       path: '/register',
       component: Register,
-      name: 'register'
+      name: 'register',
+      meta: {
+        requiresVisitor: true
+      }
     },
     {
       path: '/logout',
       component: Logout,
       name: 'logout'
-    },
-    {
-      path: '/about/:id',
-      component: About,
-      name: 'about'
     }
   ]
 })

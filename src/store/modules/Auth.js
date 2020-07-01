@@ -34,7 +34,7 @@ const actions = {
   },
   logoutUser: (context) => {
     if (context.getters.loggedIn) {
-      Axios.post('/api/user/logout').then(res => {
+      Axios.post('/api/logout').then(res => {
         removeToken(context)
       }).catch(err => {
         removeToken(context)
