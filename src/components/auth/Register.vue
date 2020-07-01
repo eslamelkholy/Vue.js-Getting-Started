@@ -2,7 +2,7 @@
   <v-app id="inspire">
     <v-main>
       <v-container
-        class="fill-height"
+        class="fill-height mainWrapper"
         fluid
       >
         <v-row
@@ -31,7 +31,7 @@
                     prepend-icon="mdi-account"
                     type="text"
                     v-model="name"
-                    :rules="requiredRules"
+                    :rules="nameRules"
                   ></v-text-field>
 
                   <v-text-field
@@ -57,7 +57,7 @@
                     prepend-icon="mdi-lock"
                     type="password"
                     v-model="password"
-                    :rules="requiredRules"
+                    :rules="passwordRules"
 
                   ></v-text-field>
                 </v-form>
@@ -95,9 +95,13 @@ export default {
         v => !!v || 'E-mail is required',
         v => /.+@.+\..+/.test(v) || 'E-mail must be valid'
       ],
-      requiredRules: [
+      nameRules: [
         v => !!v || 'Name is required'
       ],
+      passwordRules: [
+        v => !!v || 'Password is required'
+      ],
+      dataSucessMsg: 'Congratulations! Registered Successfully..',
       lazy: false
     }
   },
@@ -106,9 +110,11 @@ export default {
       this.$refs.form.validate()
     },
     async register () {
+      this.$refs.form.validate()
+      if (!this.valid) return
       try {
         await this.$store.dispatch('registerUser', { email: this.email, password: this.password, username: this.username, name: this.name })
-        this.$router.push({ name: 'todo' }).catch(() => {})
+        this.$router.push({ name: 'todo', params: { dataSucessMsg: this.dataSucessMsg } }).catch(() => {})
       } catch (err) {
         this.serverErrors = Object.values(err.response.data.errors)
       }

@@ -23,7 +23,8 @@ export default new Router({
       name: 'todo',
       meta: {
         requiresAuth: true
-      }
+      },
+      props: true
     },
     {
       path: '/login',

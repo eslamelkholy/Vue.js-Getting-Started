@@ -27,6 +27,10 @@
       <todo-filter></todo-filter>
       <clear-completed-todo></clear-completed-todo>
     </div>
+    <!-- SnackBar -->
+    <div v-if="dataSucessMsg">
+      <snack-bar :snackbar="snackbar" :dataSucessMsg="dataSucessMsg"></snack-bar>
+    </div>
   </div>
 </template>
 
@@ -37,15 +41,22 @@ import TodoItemsRemaining from './TodoItemsRemaining.vue'
 import TodoCheckAll from './TodoCheckAll.vue'
 import TodoFilter from './TodoFilter.vue'
 import ClearCompletedTodo from './ClearCompletedTodo.vue'
+import SnackBar from '../../utils/SnackBar.vue'
 
 export default {
   name: 'todo-list',
+  props: {
+    dataSucessMsg: {
+      type: String
+    }
+  },
   components: {
     TodoItem,
     TodoItemsRemaining,
     TodoCheckAll,
     TodoFilter,
-    ClearCompletedTodo
+    ClearCompletedTodo,
+    SnackBar
   },
   data () {
     return {
@@ -55,6 +66,7 @@ export default {
   },
   created () {
     this.$store.dispatch('getTodos')
+    if (this.dataSucessMsg) this.snackbar = true
   },
   computed: {
     anyRemaining () {
