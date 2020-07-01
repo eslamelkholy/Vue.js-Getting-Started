@@ -3,8 +3,9 @@
 </template>
 <script>
 export default {
-  created () {
-    this.$store.dispatch('logoutUser')
+  async created () {
+    await this.$store.dispatch('logoutUser')
+    this.$router.push({ name: 'login' }).catch(() => {})
   }
 }
 </script>

@@ -1,6 +1,5 @@
 /* eslint-disable no-return-assign */
 import Axios from '../../service/axiosInstance'
-import router from '../../router'
 import AuthService from '../../service/Auth'
 
 const state = () => ({
@@ -15,21 +14,10 @@ const getters = {
 }
 
 const mutations = {
-  loginUser: (state, data) => {
-    AuthService.setState(state, data)
-    router.push('/todo').catch(() => {})
-  },
-  logoutUser: (state) => {
-    state.token = null
-    state.user = {}
-    router.push('/login').catch(() => {})
-  },
-  registerUser: (state, data) => {
-    AuthService.setState(state, data)
-    router.push('/todo').catch(() => {})
-  }
+  loginUser: (state, data) => AuthService.setState(state, data),
+  logoutUser: (state) => AuthService.setState(state, {access_token: null, user: {}}),
+  registerUser: (state, data) => AuthService.setState(state, data)
 }
-
 const actions = {
   loginUser: async (context, credentials) => {
     const res = await Axios.post('/api/user/login', credentials)

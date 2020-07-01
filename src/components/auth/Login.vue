@@ -74,6 +74,7 @@ export default {
     async login () {
       try {
         await this.$store.dispatch('loginUser', { email: this.email, password: this.password })
+        this.$router.push({ name: 'todo' }).catch(() => {})
       } catch (err) {
         this.serverError = err.response.data
         this.password = ''
