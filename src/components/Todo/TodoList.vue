@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container pageWrapper">
     <v-text-field
             v-model="newTodo" type="text" class="todo-input"
     placeholder="what wants to be done"

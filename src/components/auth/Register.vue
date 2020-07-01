@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire">
+  <v-app id="inspire" class="pageWrapper">
     <v-main>
       <v-container
         class="fill-height mainWrapper"

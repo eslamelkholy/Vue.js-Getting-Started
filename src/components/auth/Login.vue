@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire">
+  <v-app id="inspire" class="pageWrapper">
     <v-main>
       <v-container
         class="fill-height"
@@ -45,7 +45,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn type="submit" color="primary" form="check-login-form" @click="login">Login</v-btn>
+                <v-btn type="submit" color="primary" form="check-login-form" @click="login">Login <div v-if="loading" class="lds-ring"><div></div><div></div><div></div><div></div></div></v-btn>
               </v-card-actions>
             </v-card>
             <v-alert close-icon='$cancel' v-if="serverError" dense type="error">
@@ -67,11 +67,13 @@ export default {
     return {
       email: '',
       password: '',
-      serverError: ''
+      serverError: '',
+      loading: false
     }
   },
   methods: {
     async login () {
+      this.loading = true
       try {
         await this.$store.dispatch('loginUser', { email: this.email, password: this.password })
         this.$router.push({ name: 'todo' }).catch(() => {})
@@ -79,6 +81,7 @@ export default {
         this.serverError = err.response.data
         this.password = ''
       }
+      this.loading = false
     }
   }
 }

@@ -8,7 +8,14 @@
       <li v-if="loggedIn"><router-link :to="{ name: 'logout' }">Logout</router-link></li>
     </ul>
       <div class="flex-center">
+        <transition
+        name="router-animation"
+        enter-active-class="animated fadeIn"
+        leave-active-class="animated fadeOut"
+        mode="out-in"
+        >
         <router-view></router-view>
+        </transition>
       </div>
   </div>
 </template>
