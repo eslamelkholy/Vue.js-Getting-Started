@@ -1,5 +1,13 @@
 import Axios from 'axios'
 
-Axios.defaults.baseURL = 'http://127.0.0.1:8000'
+const axiosInstance = Axios.create({
+  baseURL: 'http://127.0.0.1:8000'
+})
 
-export default Axios
+axiosInstance.interceptors.request.use((cfg) => {
+  cfg.headers['Accept'] = 'application/json'
+  cfg.headers['Authorization'] = localStorage.getItem('token')
+  return cfg
+})
+
+export default axiosInstance

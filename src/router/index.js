@@ -5,6 +5,7 @@ import Home from '@/components/HomePage/Home'
 import About from '@/components/HomePage/About'
 import Login from '@/components/auth/Login'
 import Register from '@/components/auth/Register'
+import Logout from '@/components/auth/Logout'
 
 Vue.use(Router)
 
@@ -30,6 +31,11 @@ export default new Router({
       path: '/register',
       component: Register,
       name: 'register'
+    },
+    {
+      path: '/logout',
+      component: Logout,
+      name: 'logout'
     },
     {
       path: '/about/:id',
